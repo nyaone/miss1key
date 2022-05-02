@@ -1,0 +1,3 @@
+miss.1key {
+    reverse_proxy localhost:3000
+}

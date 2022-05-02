@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  web:
+    restart: unless-stopped
+    image: misskey/misskey:latest
+    links:
+      - db
+      - redis
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - internal_network
+      - external_network
+    volumes:
+      - ../misskey/files:/misskey/files
+      - ../config/misskey:/misskey/.config:ro
+
+  redis:
+    restart: unless-stopped
+    image: redis:alpine
+    networks:
+      - internal_network
+
+  db:
+    restart: unless-stopped
+    image: postgres:alpine
+    networks:
+      - internal_network
+    env_file:
+      - ../config/misskey/db.env
+    volumes:
+      - ../misskey/db:/var/lib/postgresql/data
+
+networks:
+  internal_network:
+    internal: true
+  external_network:

@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  caddy:
+    image: caddy
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ../config/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ../caddy/site:/srv
+      - ../caddy/ssl:/ssl # In case you want to use own SSL certs
+      - ../caddy/data:/data
+      - ../caddy/config:/config
