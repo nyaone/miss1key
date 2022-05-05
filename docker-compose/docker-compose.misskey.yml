@@ -21,7 +21,8 @@ services:
     image: redis:alpine
     networks:
       - internal_network
-
+    volumes:
+      - ./redis:/data
   db:
     restart: unless-stopped
     image: postgres:alpine
